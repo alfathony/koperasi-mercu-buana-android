@@ -1,19 +1,15 @@
 package com.abdullatieffathoni41816110153uas.koperasimercubuana;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.support.design.widget.BottomNavigationView;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
@@ -26,14 +22,16 @@ import org.json.JSONObject;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+/*
+* @author Abdul Latief Fathoni 41816110153
+* 17 July 2018
+* purpose final exam mercu buana
+*
+* */
 
-public class MainActivity extends AppCompatActivity implements AddBarangFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity {
 
     private String TAG = MainActivity.class.getSimpleName();
     private ProgressDialog pDialog;
@@ -57,8 +55,8 @@ public class MainActivity extends AppCompatActivity implements AddBarangFragment
         btn_barang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction().add(R.id.addFragment, new AddBarangFragment()).commit();
-
+                Intent intent = new Intent(MainActivity.this, AddBarang.class);
+                startActivity(intent);
             }
         });
 
