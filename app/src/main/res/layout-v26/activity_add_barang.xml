@@ -80,6 +80,7 @@
 
         <Button
             android:id="@+id/btn_simpan"
+            android:onClick="simpanBarang"
             android:paddingVertical="22dp"
             android:textColor="#ffffff"
             android:layout_width="match_parent"

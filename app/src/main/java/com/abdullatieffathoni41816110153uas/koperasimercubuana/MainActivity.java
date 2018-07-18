@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
@@ -70,15 +71,14 @@ public class MainActivity extends AppCompatActivity {
         showDialog();
 
         AndroidNetworking.get("http://koperasi-umb-api.herokuapp.com/barang")
-//                .addHeaders("Authorization", token)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            JSONArray data_berang = response.getJSONArray("data");
-                            for (int i = 0; i < data_berang.length(); i++) {
-                                JSONObject c = data_berang.getJSONObject(i);
+                            JSONArray data_barang = response.getJSONArray("data");
+                            for (int i = 0; i < data_barang.length(); i++) {
+                                JSONObject c = data_barang.getJSONObject(i);
 
                                 String id = c.getString("id");
                                 String nama_barang = c.getString("nama_barang");
@@ -116,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onError(ANError error) {
                         Log.e(TAG, "Couldn't get json from server. " + error);
+                        Toast.makeText(MainActivity.this, "Periksa sambungan internet anda", Toast.LENGTH_SHORT).show();
+                        hideDialog();
                     }
                 });
     }
