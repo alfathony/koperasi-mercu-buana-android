@@ -9,4 +9,5 @@
     <string name="nama_barang">Nama Barang</string>
     <string name="harga_barang">Harga Barang</string>
     <string name="simpan">Simpan</string>
+    <string name="title_activity_list_barang">Data Barang</string>
 </resources>

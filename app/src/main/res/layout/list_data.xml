@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:includeFontPadding="false"
         android:text="Nama Barang"
+        android:textColor="#333333"
         android:textStyle="bold" />
 
     <LinearLayout

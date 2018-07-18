@@ -1,6 +1,7 @@
 package com.abdullatieffathoni41816110153uas.koperasimercubuana;
 
 import android.app.Notification;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -55,33 +56,43 @@ public class AddBarang extends AppCompatActivity {
         simpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AndroidNetworking.post("http://koperasi-umb-api.herokuapp.com/barang/add")
-                .addBodyParameter("nama_barang", input_barang.getText().toString())
-                .addBodyParameter("merk_barang", input_merk.getText().toString())
-                .addBodyParameter("harga_barang", input_harga.getText().toString())
-                .setPriority(Priority.MEDIUM)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try{
-                            // TODO : create validation
-                            String status = response.getString("status");
-                            String message = response.getString("message");
+                String nama_barang = input_barang.getText().toString();
+                String merk_barang = input_merk.getText().toString();
+                String harga_barang = input_harga.getText().toString();
 
-                            Toast.makeText(AddBarang.this, message, Toast.LENGTH_SHORT).show();
-                            // TODO : create intent to main activity if success
-                        }catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(AddBarang.this, "Error JSON Exception", Toast.LENGTH_LONG).show();
-                        }
+                if (nama_barang.isEmpty() && merk_barang.isEmpty() && harga_barang.isEmpty()){
+                    Toast.makeText(AddBarang.this, "Nama barang, merk dan harga harus di isi!", Toast.LENGTH_SHORT).show();
+                }else{
+                    AndroidNetworking.post("http://koperasi-umb-api.herokuapp.com/barang/add")
+                            .addBodyParameter("nama_barang", nama_barang)
+                            .addBodyParameter("merk_barang", merk_barang)
+                            .addBodyParameter("harga_barang", harga_barang)
+                            .setPriority(Priority.MEDIUM)
+                            .build()
+                            .getAsJSONObject(new JSONObjectRequestListener() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    try{
+                                        String status = response.getString("status");
+                                        String message = response.getString("message");
 
-                    }
-                    @Override
-                    public void onError(ANError error) {
-                        Toast.makeText(AddBarang.this, "Error", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                                        Toast.makeText(AddBarang.this, "Barang berhasil ditambahkan", Toast.LENGTH_SHORT).show();
+
+                                        Intent intent = new Intent(AddBarang.this, MainActivity.class);
+                                        startActivity(intent);
+
+                                    }catch (JSONException e) {
+                                        e.printStackTrace();
+                                        Toast.makeText(AddBarang.this, "Error JSON Exception", Toast.LENGTH_LONG).show();
+                                    }
+
+                                }
+                                @Override
+                                public void onError(ANError error) {
+                                    Toast.makeText(AddBarang.this, "Error", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
             }
         });
 
